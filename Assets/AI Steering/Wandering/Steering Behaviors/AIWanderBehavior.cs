@@ -9,7 +9,7 @@ namespace Steering
     {
         [SerializeField, Range(-.1f, .1f)] private float jitter = .05f;
 
-        protected override Vector3 Calculate(AISteeringAgent _agent)
+        public override Vector3 Calculate(AISteeringAgent _agent)
         {
             Vector3 force = _agent.CurrentForce;
 

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 namespace Steering
 {
     public class AISteeringAgent : MonoBehaviour
@@ -17,9 +19,11 @@ namespace Steering
         [System.NonSerialized] public Vector3 velocity;
 
         public float Speed => speed;
+        public float ViewAngle => viewAngle;
         public float MovementSmoothing => smoothing;
 
         [SerializeField, Range(.01f, .1f)] private float smoothing = .05f;
+        [SerializeField, Range(45f, 180f)] private float viewAngle = 180f;
         [SerializeField] private new MeshRenderer renderer;
         [SerializeField] private AISteeringBehavior behaviour;
 
@@ -35,6 +39,15 @@ namespace Steering
         {
             transform.localPosition = _pos;
             transform.localRotation = _rot;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+            foreach (Vector3 direction in SteeringAgentHelper.DirectionsInCone(this, true))
+            {
+                Gizmos.DrawSphere(transform.position + direction, .05f);
+            }
         }
     }
 }
